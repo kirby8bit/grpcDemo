@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	fmt.Println("Go gRPC Beginners Tutorial!")
+	fmt.Println("Go gRPC server start!")
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 9000))
 	if err != nil {
