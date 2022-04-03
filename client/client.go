@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"log"
+	"os"
 	"someChat/chat"
 
 	"golang.org/x/net/context"
@@ -9,6 +12,7 @@ import (
 )
 
 func main() {
+	fmt.Println("Hello! enter your youtube URL: ")
 
 	var conn *grpc.ClientConn
 	conn, err := grpc.Dial(":9000", grpc.WithInsecure())
@@ -19,7 +23,12 @@ func main() {
 
 	c := chat.NewChatServiceClient(conn)
 
-	response, err := c.SayHello(context.Background(), &chat.Message{Body: "Hello From Client!"})
+	scanner := bufio.NewScanner(os.Stdin)
+	var text string
+	scanner.Scan()
+	text = scanner.Text()
+
+	response, err := c.SayHello(context.Background(), &chat.Message{Body: text})
 	if err != nil {
 		log.Fatalf("Error when calling SayHello: %s", err)
 	}
